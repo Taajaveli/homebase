@@ -4,11 +4,24 @@
     <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 
-    <!-- Only so the "Uninstall" option can open the system uninstall prompt.
-         Note: no INTERNET permission. This launcher physically cannot load ads. -->
+    <uses-feature android:name="android.software.live_wallpaper" android:required="false" />
+
+    <!-- So the "Uninstall" option can open the system uninstall prompt. -->
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
+    <!-- Continue Watching: read the system Watch Next list apps publish to. -->
+    <uses-permission android:name="android.permission.READ_TV_LISTINGS" />
+    <uses-permission android:name="com.android.providers.tv.permission.READ_EPG_DATA" />
+
+    <!-- Only used to fetch the artwork your apps list in Continue Watching.
+         Homebase has no ad, analytics or tracking code. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <queries>
+        <provider android:authorities="android.media.tv" />
+        <intent>
+            <action android:name="android.service.wallpaper.LIVE_WALLPAPER_CHOOSER" />
+        </intent>
         <intent>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LEANBACK_LAUNCHER" />

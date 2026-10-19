@@ -2,9 +2,14 @@
 
 A plain home screen for the onn 4K / 4K Pro (Google TV). Your apps, a clock, nothing else.
 
-- No ads, no "recommended for you" rows, no tracking — it has no internet permission at all
+- No ads, no "recommended for you" rows, no tracking. The only thing it downloads is
+  the artwork your own apps list in Continue Watching
 - No dependencies: no AndroidX, no SDKs. The APK is tiny
 - Favorites row on top (hold **OK** on any app → Pin, Move left/right)
+- **Continue Watching** row: whatever your apps report to Android TV's system
+  "Watch Next" list, with artwork and a progress bar. OK resumes; hold OK to remove one
+- **Live backgrounds**: Aurora, Starfield, Waves, Embers, or Still. Change them from the
+  **Background** button. They only animate while you're on the home screen
 - Every installed app below, A–Z, including sideloaded phone apps
 - Hide apps you never use (Options → Show hidden apps to bring them back)
 - Wi-Fi and Settings one click from home
@@ -56,6 +61,7 @@ Disney+, etc. (you can reinstall any of them from the Play Store). Run with
 
 ```
 adb connect 192.168.1.50:5555
+adb shell pm grant com.taajaveli.homebase android.permission.READ_TV_LISTINGS
 adb shell pm disable-user --user 0 com.google.android.apps.tv.launcherx
 adb shell pm disable-user --user 0 com.google.android.tungsten.setupwraith
 adb shell pm uninstall -k --user 0 com.google.android.tvrecommendations
@@ -63,6 +69,11 @@ adb shell pm uninstall -k --user 0 com.google.android.apps.tv.dreamx
 ```
 
 ## Good to know
+
+- **Continue Watching** asks for access the first time Homebase opens. If the box
+  won't show that prompt, `debloat.sh` grants it. Run it again if you set Homebase up
+  before version 1.1. Only apps that report progress to the system list show up.
+  Some apps only send it to Google's servers, so they won't appear.
 
 - **What you lose:** the stock Google TV tabs (For You, Live, Library) and its
   profile switcher. Voice search on the remote, casting, and all your apps keep working.

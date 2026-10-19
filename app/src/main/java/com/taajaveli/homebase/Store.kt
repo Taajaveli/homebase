@@ -48,9 +48,39 @@ class Store(context: Context) {
             prefs.edit().putBoolean(KEY_SHOW_HIDDEN, value).apply()
         }
 
+    var wallpaper: String
+        get() = prefs.getString(KEY_WALLPAPER, "AURORA") ?: "AURORA"
+        set(value) {
+            prefs.edit().putString(KEY_WALLPAPER, value).apply()
+        }
+
+    var continueWatching: Boolean
+        get() = prefs.getBoolean(KEY_CW, true)
+        set(value) {
+            prefs.edit().putBoolean(KEY_CW, value).apply()
+        }
+
+    var askedTvAccess: Boolean
+        get() = prefs.getBoolean(KEY_ASKED, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_ASKED, value).apply()
+        }
+
+    fun dismissed(): Set<String> = (prefs.getStringSet(KEY_DISMISSED, emptySet()) ?: emptySet()).toSet()
+
+    fun dismiss(key: String) {
+        // Keep the list from growing forever.
+        val set = dismissed().toMutableList().apply { add(key) }.takeLast(300).toSet()
+        prefs.edit().putStringSet(KEY_DISMISSED, set).apply()
+    }
+
     private companion object {
         const val KEY_FAVS = "favorites"
         const val KEY_HIDDEN = "hidden"
         const val KEY_SHOW_HIDDEN = "showHidden"
+        const val KEY_WALLPAPER = "wallpaper"
+        const val KEY_CW = "continueWatching"
+        const val KEY_ASKED = "askedTvAccess"
+        const val KEY_DISMISSED = "dismissedWatchNext"
     }
 }

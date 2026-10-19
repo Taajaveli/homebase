@@ -66,6 +66,14 @@ STREAMING=(
   com.google.android.youtube.tvmusic
 )
 
+echo "== Turning on Continue Watching =="
+if $A pm grant "$HOMEBASE" android.permission.READ_TV_LISTINGS 2>/dev/null; then
+  echo "  granted   Continue Watching access"
+else
+  echo "  (this box wouldn't grant READ_TV_LISTINGS; Continue Watching may stay off)"
+fi
+$A pm grant "$HOMEBASE" com.android.providers.tv.permission.READ_EPG_DATA >/dev/null 2>&1 || true
+
 echo "== Switching home screen to Homebase =="
 for p in "${LAUNCHER[@]}"; do
   if has "$p"; then $A pm disable-user --user 0 "$p" >/dev/null && echo "  disabled  $p"; fi
