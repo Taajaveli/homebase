@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SlamVision</string>
+    <color name="black">#000000</color>
+
+    <style name="Theme.SlamVision" parent="@android:style/Theme.Material.NoActionBar.Fullscreen">
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+</resources>

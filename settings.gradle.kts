@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Homebase"
 include(":app")
+include(":slamvision")

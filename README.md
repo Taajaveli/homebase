@@ -68,6 +68,18 @@ adb shell pm uninstall -k --user 0 com.google.android.tvrecommendations
 adb shell pm uninstall -k --user 0 com.google.android.apps.tv.dreamx
 ```
 
+## SlamVision app
+
+`slamvision/` is a full-screen TV app for the SlamVision channel
+(ring-channel-tv.emergent.host). It builds alongside Homebase:
+
+```
+https://github.com/Taajaveli/homebase/releases/download/latest/slamvision.apk
+```
+
+Arrows move a yellow highlight around the page, OK clicks, Back goes back and
+Menu gives Reload / Back to the guide / Exit. The screen stays awake while it's open.
+
 ## Good to know
 
 - **Continue Watching** asks for access the first time Homebase opens. If the box

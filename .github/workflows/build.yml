@@ -22,16 +22,20 @@ jobs:
         with:
           gradle-version: "8.10.2"
 
-      - name: Build release APK
-        run: gradle :app:assembleRelease --no-daemon
+      - name: Build release APKs
+        run: gradle :app:assembleRelease :slamvision:assembleRelease --no-daemon
 
-      - name: Rename APK
-        run: cp app/build/outputs/apk/release/app-release.apk homebase.apk
+      - name: Rename APKs
+        run: |
+          cp app/build/outputs/apk/release/app-release.apk homebase.apk
+          cp slamvision/build/outputs/apk/release/slamvision-release.apk slamvision.apk
 
       - uses: actions/upload-artifact@v4
         with:
-          name: homebase-apk
-          path: homebase.apk
+          name: apks
+          path: |
+            homebase.apk
+            slamvision.apk
 
       # Keeps one always-current download link:
       # https://github.com/<you>/<repo>/releases/download/latest/homebase.apk
@@ -41,7 +45,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest homebase.apk \
-            --title "Homebase (latest)" \
+          gh release create latest homebase.apk slamvision.apk \
+            --title "Homebase + SlamVision (latest)" \
             --notes "Built from ${GITHUB_SHA::7}" \
             --target "$GITHUB_SHA"
