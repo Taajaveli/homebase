@@ -101,6 +101,8 @@ class MainActivity : Activity() {
         setContentView(root)
 
         if (savedInstanceState == null || web.restoreState(savedInstanceState) == null) {
+            // Drop any cached copy so every launch gets the newest version of the site.
+            web.clearCache(true)
             web.loadUrl(HOME_URL)
         }
         web.requestFocus()
@@ -134,7 +136,7 @@ class MainActivity : Activity() {
             .setTitle("SlamVision")
             .setItems(arrayOf("Reload", "Back to the guide", "Exit")) { _, which ->
                 when (which) {
-                    0 -> web.reload()
+                    0 -> { web.clearCache(true); web.reload() }
                     1 -> { exitFullscreen(); web.loadUrl(HOME_URL) }
                     2 -> finish()
                 }
